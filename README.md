@@ -4,3 +4,7 @@ Használt technológiák:
 - [flutter](https://flutter.dev/)
 - [jquery](https://jquery.com/)
 - [Figma](https://www.figma.com/)
+
+
+flutter build
+flutter run web

@@ -1,5 +1,6 @@
 # teherauto-projekt
 # Egy fuvarcéget segítő adminisztrációs, és dolgozókat eligazító segédprogram.
+### [dokumentáció](https://1drv.ms/w/s!AqJqtTrGOFsOhF56BeB8l6NyYWVW?e=x2FbJL)
 Használt technológiák:
 - [flutter](https://flutter.dev/)
 - [jquery](https://jquery.com/)

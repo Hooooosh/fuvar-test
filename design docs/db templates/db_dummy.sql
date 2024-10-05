@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2024 at 01:28 PM
+-- Generation Time: Oct 05, 2024 at 07:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `t_adr_classifications`
+--
+
+CREATE TABLE `t_adr_classifications` (
+  `id` tinyint(4) NOT NULL,
+  `class` float NOT NULL,
+  `name` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `t_adr_classifications`
+--
+
+INSERT INTO `t_adr_classifications` (`id`, `class`, `name`) VALUES
+(1, 1, 'Explosive substance'),
+(2, 2, 'Flammable gas'),
+(3, 3, 'Flammable liquid'),
+(4, 4.1, 'Flammable solid'),
+(5, 4.2, 'Spontaneously combustible material'),
+(6, 4.3, 'Water reactive substance'),
+(7, 5.1, 'Oxidizer'),
+(8, 5.2, 'Organic peroxide'),
+(9, 6.1, 'Toxic substance'),
+(10, 6.2, 'Infectious substance'),
+(11, 7, 'Radioactive compound'),
+(12, 8, 'Corrosive material'),
+(13, 9, 'Miscalaneous dangerous component');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `t_clients`
 --
 
@@ -31,27 +62,47 @@ CREATE TABLE `t_clients` (
   `id` smallint(6) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `phone_number` varchar(15) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  `date_added` date NOT NULL DEFAULT current_timestamp(),
+  `client_identifier_id` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `t_clients`
 --
 
-INSERT INTO `t_clients` (`id`, `name`, `phone_number`, `email`) VALUES
-(1, 'Bordó Amanda', '+36201234567', 'amandabordo@citromail.com'),
-(2, 'CupsAndMugs Ltd.', '+36505554433', 'ugyvezeto@cupsmugs.com'),
-(3, 'Stiefel Eurocart Kft.', '+3614151020', 'suli@stiefel.hu'),
-(4, 'Alpha Logistics', '+36123456789', 'contact@alphalogistics.com'),
-(5, 'Beta Freight', '+441234567890', 'info@betafreight.co.uk'),
-(6, 'Gamma Transport', '+33123456789', 'support@gammatransport.fr'),
-(7, 'Delta Carriers', '+4915123456789', 'service@deltacarriers.de'),
-(8, 'Epsilon Shipping', '+42123456789', 'hello@epsilonshipping.sk'),
-(9, 'Zeta Movers', '+36201234567', 'info@zetamovers.com'),
-(10, 'Eta Logistics', '+45123456789', 'contact@etalogistics.dk'),
-(11, 'Theta Freight', '+35123456789', 'info@thetafreight.pt'),
-(12, 'Iota Transport', '+35123456789', 'support@iotatransport.pt'),
-(13, 'Kappa Delivery', '+35912345678', 'service@kappadelivery.bg');
+INSERT INTO `t_clients` (`id`, `name`, `phone_number`, `email`, `date_added`, `client_identifier_id`) VALUES
+(1, 'Bordó Amanda', '+36201234567', 'amandabordo@citromail.com', '2024-10-03', 1),
+(2, 'CupsAndMugs Ltd.', '+36505554433', 'ugyvezeto@cupsmugs.com', '2024-10-03', 1),
+(3, 'Stiefel Eurocart Kft.', '+3614151020', 'suli@stiefel.hu', '2024-10-03', 1),
+(4, 'Alpha Logistics', '+36123456789', 'contact@alphalogistics.com', '2024-10-03', 1),
+(5, 'Beta Freight', '+441234567890', 'info@betafreight.co.uk', '2024-10-03', 1),
+(6, 'Gamma Transport', '+33123456789', 'support@gammatransport.fr', '2024-10-03', 1),
+(7, 'Delta Carriers', '+4915123456789', 'service@deltacarriers.de', '2024-10-03', 1),
+(8, 'Epsilon Shipping', '+42123456789', 'hello@epsilonshipping.sk', '2024-10-03', 1),
+(9, 'Zeta Movers', '+36201234567', 'info@zetamovers.com', '2024-10-03', 1),
+(10, 'Eta Logistics', '+45123456789', 'contact@etalogistics.dk', '2024-10-03', 1),
+(11, 'Theta Freight', '+35123456789', 'info@thetafreight.pt', '2024-10-03', 1),
+(12, 'Iota Transport', '+35123456789', 'support@iotatransport.pt', '2024-10-03', 1),
+(13, 'Kappa Delivery', '+35912345678', 'service@kappadelivery.bg', '2024-10-03', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_client_identifier`
+--
+
+CREATE TABLE `t_client_identifier` (
+  `id` smallint(6) NOT NULL,
+  `tax_identification_number` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `t_client_identifier`
+--
+
+INSERT INTO `t_client_identifier` (`id`, `tax_identification_number`) VALUES
+(1, 'asdasd123');
 
 -- --------------------------------------------------------
 
@@ -70,24 +121,50 @@ CREATE TABLE `t_drivers` (
   `medical_exam_result` bit(1) DEFAULT b'0',
   `start_of_employment` date NOT NULL,
   `end_of_employment` date DEFAULT NULL,
-  `yearly_leave_allowance` smallint(6) NOT NULL
+  `yearly_leave_allowance` smallint(6) NOT NULL,
+  `login_password_enc` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `t_drivers`
 --
 
-INSERT INTO `t_drivers` (`id`, `id_card_number`, `full_name`, `dob`, `phone_number`, `email`, `home_address`, `medical_exam_result`, `start_of_employment`, `end_of_employment`, `yearly_leave_allowance`) VALUES
-(1, 'HU123456789', 'John Doe', '1985-07-15', '+36123456789', 'john.doe@gmail.com', '123 Main St, Budapest, Hungary', b'1', '2015-04-01', NULL, 20),
-(2, 'DE987654321', 'Anna Schmidt', '1990-02-20', '+491234567890', 'anna.schmidt@gmail.com', '45 Bahnhofstrasse, Berlin, Germany', b'1', '2017-06-10', NULL, 35),
-(3, 'FR654321987', 'Pierre Dubois', '1978-09-12', '+33123456789', 'pierre.dubois@hotmail.com', '22 Rue Lafayette, Paris, France', b'0', '2010-11-05', '2023-07-30', 31),
-(4, 'PL123789456', 'Maria Kowalska', '1988-05-30', '+48123456789', 'maria.kowalska@gmail.com', '67 Aleja Niepodległości, Warsaw, Poland', b'1', '2018-01-25', NULL, 11),
-(5, 'ES321654987', 'Carlos García', '1982-12-05', '+34123456789', 'carlos.garcia@gmail.com', '12 Calle Mayor, Madrid, Spain', b'1', '2013-03-18', NULL, 0),
-(6, 'IT456789123', 'Giulia Rossi', '1995-03-22', '+39123456789', 'giulia.rossi@freemail.hu', '23 Via Roma, Milan, Italy', b'0', '2019-08-10', NULL, 31),
-(7, 'UK789123456', 'James Smith', '1987-11-03', '+441234567890', 'james.smith@gmail.com', '50 High St, London, UK', b'1', '2016-09-12', NULL, 31),
-(8, 'SE987321654', 'Lars Johansson', '1983-04-14', '+46123456789', 'lars.johansson@citromail.hu', '89 Drottninggatan, Stockholm, Sweden', b'1', '2012-05-01', NULL, 40),
-(9, 'NL159753456', 'Sophie de Vries', '1992-08-17', '+31123456789', 'sophie.devries@gmail.com', '34 Prinsengracht, Amsterdam, Netherlands', b'0', '2020-02-15', NULL, 21),
-(10, 'FI852963741', 'Mikko Virtanen', '1986-10-09', '+358123456789', 'mikko.virtanen@hotmail.com', '19 Mannerheimintie, Helsinki, Finland', b'1', '2014-11-22', '2021-08-01', 10);
+INSERT INTO `t_drivers` (`id`, `id_card_number`, `full_name`, `dob`, `phone_number`, `email`, `home_address`, `medical_exam_result`, `start_of_employment`, `end_of_employment`, `yearly_leave_allowance`, `login_password_enc`) VALUES
+(1, 'HU123456789', 'John Doe', '1985-07-15', '+36123456789', 'john.doe@gmail.com', '123 Main St, Budapest, Hungary', b'1', '2015-04-01', NULL, 20, ''),
+(2, 'DE987654321', 'Anna Schmidt', '1990-02-20', '+491234567890', 'anna.schmidt@gmail.com', '45 Bahnhofstrasse, Berlin, Germany', b'1', '2017-06-10', NULL, 35, ''),
+(3, 'FR654321987', 'Pierre Dubois', '1978-09-12', '+33123456789', 'pierre.dubois@hotmail.com', '22 Rue Lafayette, Paris, France', b'0', '2010-11-05', '2023-07-30', 31, ''),
+(4, 'PL123789456', 'Maria Kowalska', '1988-05-30', '+48123456789', 'maria.kowalska@gmail.com', '67 Aleja Niepodległości, Warsaw, Poland', b'1', '2018-01-25', NULL, 11, ''),
+(5, 'ES321654987', 'Carlos García', '1982-12-05', '+34123456789', 'carlos.garcia@gmail.com', '12 Calle Mayor, Madrid, Spain', b'1', '2013-03-18', NULL, 0, ''),
+(6, 'IT456789123', 'Giulia Rossi', '1995-03-22', '+39123456789', 'giulia.rossi@freemail.hu', '23 Via Roma, Milan, Italy', b'0', '2019-08-10', NULL, 31, ''),
+(7, 'UK789123456', 'James Smith', '1987-11-03', '+441234567890', 'james.smith@gmail.com', '50 High St, London, UK', b'1', '2016-09-12', NULL, 31, ''),
+(8, 'SE987321654', 'Lars Johansson', '1983-04-14', '+46123456789', 'lars.johansson@citromail.hu', '89 Drottninggatan, Stockholm, Sweden', b'1', '2012-05-01', NULL, 40, ''),
+(9, 'NL159753456', 'Sophie de Vries', '1992-08-17', '+31123456789', 'sophie.devries@gmail.com', '34 Prinsengracht, Amsterdam, Netherlands', b'0', '2020-02-15', NULL, 21, ''),
+(10, 'FI852963741', 'Mikko Virtanen', '1986-10-09', '+358123456789', 'mikko.virtanen@hotmail.com', '19 Mannerheimintie, Helsinki, Finland', b'1', '2014-11-22', '2021-08-01', 10, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_driver_adr_assignments`
+--
+
+CREATE TABLE `t_driver_adr_assignments` (
+  `id` smallint(6) NOT NULL,
+  `driver_id` smallint(6) DEFAULT NULL,
+  `adr_id` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_driver_clock_inout`
+--
+
+CREATE TABLE `t_driver_clock_inout` (
+  `id` smallint(6) NOT NULL,
+  `driver_id` smallint(6) DEFAULT NULL,
+  `break_time` datetime DEFAULT NULL,
+  `type` enum('in','out') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -98,14 +175,14 @@ INSERT INTO `t_drivers` (`id`, `id_card_number`, `full_name`, `dob`, `phone_numb
 CREATE TABLE `t_driver_license_assignments` (
   `id` mediumint(9) NOT NULL,
   `driver_id` smallint(6) NOT NULL,
-  `license_id` tinyint(4) NOT NULL
+  `license_type_id` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `t_driver_license_assignments`
 --
 
-INSERT INTO `t_driver_license_assignments` (`id`, `driver_id`, `license_id`) VALUES
+INSERT INTO `t_driver_license_assignments` (`id`, `driver_id`, `license_type_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 2, 3),
@@ -294,24 +371,52 @@ CREATE TABLE `t_jobs` (
   `notes` varchar(150) DEFAULT NULL,
   `haul_completed` bit(1) NOT NULL DEFAULT b'0',
   `pickup_address` varchar(100) NOT NULL,
-  `delivery_address` varchar(100) NOT NULL
+  `delivery_address` varchar(100) NOT NULL,
+  `cargo_total_weight_t` float DEFAULT NULL,
+  `cargo_name` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `t_jobs`
 --
 
-INSERT INTO `t_jobs` (`id`, `time_accounted`, `time_pickup`, `time_completed`, `jit_expected_from`, `jit_expected_by`, `client_id`, `notes`, `haul_completed`, `pickup_address`, `delivery_address`) VALUES
-(1, '2023-08-10 08:30:00', '2023-08-10 09:00:00', '2023-08-10 16:45:00', '2023-08-10 14:00:00', '2023-08-10 18:00:00', 2, 'Fragile goods, handle with care', b'1', '12 Warehouse St, Budapest, Hungary', '45 Industrial Rd, Vienna, Austria'),
-(2, '2023-09-12 07:45:00', '2023-09-12 08:15:00', NULL, NULL, NULL, 5, 'Urgent delivery, no delays', b'0', '34 Factory Ave, Warsaw, Poland', '22 Business St, Berlin, Germany'),
-(3, '2023-07-25 10:00:00', '2023-07-25 10:30:00', '2023-07-25 18:20:00', '2023-07-25 15:00:00', '2023-07-25 19:00:00', 3, NULL, b'1', '89 Logistics Dr, Madrid, Spain', '27 Market Ln, Paris, France'),
-(4, '2023-10-03 11:20:00', '2023-10-03 11:45:00', NULL, '2023-10-03 12:00:00', '2023-10-03 16:00:00', 1, 'High-value cargo, secure transport', b'0', '100 Freight St, Rotterdam, Netherlands', '56 Commerce Blvd, Brussels, Belgium'),
-(5, '2023-11-01 09:15:00', '2023-11-01 09:45:00', '2023-11-01 17:10:00', '2023-11-01 14:00:00', '2023-11-01 18:00:00', 4, NULL, b'1', '23 Loading Dock, Milan, Italy', '78 Shipping Blvd, Zurich, Switzerland'),
-(6, '2023-08-28 08:50:00', '2023-08-28 09:20:00', NULL, NULL, NULL, 2, 'Heavy load, multiple stops', b'0', '12 Cargo St, Prague, Czech Republic', '90 Distribution Rd, Bratislava, Slovakia'),
-(7, '2023-09-20 07:30:00', '2023-09-20 08:00:00', '2023-09-20 14:50:00', '2023-09-20 13:00:00', '2023-09-20 15:00:00', 6, 'Weather delays expected', b'1', '45 Harbor Rd, Hamburg, Germany', '34 Transport Ln, Copenhagen, Denmark'),
-(8, '2023-06-18 10:10:00', '2023-06-18 10:40:00', '2023-06-18 19:30:00', NULL, NULL, 3, NULL, b'1', '101 Warehouse Blvd, Lisbon, Portugal', '67 Factory Ln, Madrid, Spain'),
-(9, '2023-09-05 09:45:00', '2023-09-05 10:15:00', NULL, '2023-09-05 11:00:00', '2023-09-05 13:00:00', 7, 'Awaiting customs clearance', b'0', '50 Export Dr, London, UK', '80 Trade Ave, Dublin, Ireland'),
-(10, '2023-05-14 08:20:00', '2023-05-14 08:50:00', '2023-05-14 17:00:00', '2023-05-14 13:00:00', '2023-05-14 15:00:00', 8, 'Large volume, extra handling required', b'1', '32 Dock St, Helsinki, Finland', '92 Distribution Ave, Stockholm, Sweden');
+INSERT INTO `t_jobs` (`id`, `time_accounted`, `time_pickup`, `time_completed`, `jit_expected_from`, `jit_expected_by`, `client_id`, `notes`, `haul_completed`, `pickup_address`, `delivery_address`, `cargo_total_weight_t`, `cargo_name`) VALUES
+(1, '2023-08-10 08:30:00', '2023-08-10 09:00:00', '2023-08-10 16:45:00', '2023-08-10 14:00:00', '2023-08-10 18:00:00', 2, 'Fragile goods, handle with care', b'1', '12 Warehouse St, Budapest, Hungary', '45 Industrial Rd, Vienna, Austria', 3.1, 'Cabbage'),
+(2, '2023-09-12 07:45:00', '2023-09-12 08:15:00', NULL, NULL, NULL, 5, 'Urgent delivery, no delays', b'0', '34 Factory Ave, Warsaw, Poland', '22 Business St, Berlin, Germany', 0.6, 'Electronics'),
+(3, '2023-07-25 10:00:00', '2023-07-25 10:30:00', '2023-07-25 18:20:00', '2023-07-25 15:00:00', '2023-07-25 19:00:00', 3, NULL, b'1', '89 Logistics Dr, Madrid, Spain', '27 Market Ln, Paris, France', 12, 'Galvanized square st'),
+(4, '2023-10-03 11:20:00', '2023-10-03 11:45:00', NULL, '2023-10-03 12:00:00', '2023-10-03 16:00:00', 1, 'High-value cargo, secure transport', b'0', '100 Freight St, Rotterdam, Netherlands', '56 Commerce Blvd, Brussels, Belgium', 2.1, 'Eco-friendly wood ve'),
+(5, '2023-11-01 09:15:00', '2023-11-01 09:45:00', '2023-11-01 17:10:00', '2023-11-01 14:00:00', '2023-11-01 18:00:00', 4, NULL, b'1', '23 Loading Dock, Milan, Italy', '78 Shipping Blvd, Zurich, Switzerland', 7.5, 'Milk'),
+(6, '2023-08-28 08:50:00', '2023-08-28 09:20:00', NULL, NULL, NULL, 2, 'Heavy load, multiple stops', b'0', '12 Cargo St, Prague, Czech Republic', '90 Distribution Rd, Bratislava, Slovakia', 1.25, 'Hay'),
+(7, '2023-09-20 07:30:00', '2023-09-20 08:00:00', '2023-09-20 14:50:00', '2023-09-20 13:00:00', '2023-09-20 15:00:00', 6, 'Weather delays expected', b'1', '45 Harbor Rd, Hamburg, Germany', '34 Transport Ln, Copenhagen, Denmark', 9.2, 'Liquid waste'),
+(8, '2023-06-18 10:10:00', '2023-06-18 10:40:00', '2023-06-18 19:30:00', NULL, NULL, 3, NULL, b'1', '101 Warehouse Blvd, Lisbon, Portugal', '67 Factory Ln, Madrid, Spain', 2.8, 'Liquid nitrogen'),
+(9, '2023-09-05 09:45:00', '2023-09-05 10:15:00', NULL, '2023-09-05 11:00:00', '2023-09-05 13:00:00', 7, 'Awaiting customs clearance', b'0', '50 Export Dr, London, UK', '80 Trade Ave, Dublin, Ireland', 6.1, 'Gasoline'),
+(10, '2023-05-14 08:20:00', '2023-05-14 08:50:00', '2023-05-14 17:00:00', '2023-05-14 13:00:00', '2023-05-14 15:00:00', 8, 'Large volume, extra handling required', b'1', '32 Dock St, Helsinki, Finland', '92 Distribution Ave, Stockholm, Sweden', 3.1, 'Lithium');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_jobs_midway_dropoffs`
+--
+
+CREATE TABLE `t_jobs_midway_dropoffs` (
+  `id` smallint(6) NOT NULL,
+  `job_id` smallint(6) NOT NULL,
+  `delivery_address` varchar(100) NOT NULL,
+  `weight_to_dropoff_t` float NOT NULL,
+  `completed` bit(1) DEFAULT b'0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_job_adr_assignments`
+--
+
+CREATE TABLE `t_job_adr_assignments` (
+  `id` smallint(6) NOT NULL,
+  `job_id` smallint(6) DEFAULT NULL,
+  `adr_id` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -323,28 +428,40 @@ CREATE TABLE `t_job_vehicle_driver_assignments` (
   `id` smallint(6) NOT NULL,
   `job_id` smallint(6) NOT NULL,
   `vehicle_id` smallint(6) NOT NULL,
-  `trailer_id` smallint(6) DEFAULT NULL,
   `driver_id` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `t_job_vehicle_driver_assignments`
+-- Table structure for table `t_job_vehicle_trailer_assignments`
 --
 
-INSERT INTO `t_job_vehicle_driver_assignments` (`id`, `job_id`, `vehicle_id`, `trailer_id`, `driver_id`) VALUES
-(1, 1, 1, NULL, 3),
-(2, 2, 2, 4, 5),
-(3, 2, 3, 8, 5),
-(4, 3, 3, NULL, 1),
-(5, 4, 5, 8, 7),
-(6, 5, 6, NULL, 2),
-(7, 6, 7, 9, 4),
-(8, 7, 11, NULL, 6),
-(9, 8, 1, 9, 9),
-(10, 8, 3, 10, 9),
-(11, 8, 8, 12, 9),
-(12, 9, 3, 12, 8),
-(13, 10, 11, NULL, 10);
+CREATE TABLE `t_job_vehicle_trailer_assignments` (
+  `id` smallint(6) NOT NULL,
+  `job_id` smallint(6) NOT NULL,
+  `vehicle_id` smallint(6) NOT NULL,
+  `trailer_id` smallint(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `t_job_vehicle_trailer_assignments`
+--
+
+INSERT INTO `t_job_vehicle_trailer_assignments` (`id`, `job_id`, `vehicle_id`, `trailer_id`) VALUES
+(1, 1, 1, NULL),
+(2, 2, 2, 4),
+(3, 2, 3, 8),
+(4, 3, 3, NULL),
+(5, 4, 5, 8),
+(6, 5, 6, NULL),
+(7, 6, 7, 9),
+(8, 7, 11, NULL),
+(9, 8, 1, 9),
+(10, 8, 3, 10),
+(11, 8, 8, 12),
+(12, 9, 3, 12),
+(13, 10, 11, NULL);
 
 -- --------------------------------------------------------
 
@@ -392,6 +509,18 @@ INSERT INTO `t_lender_info` (`id`, `lender_company_name`, `lender_phone`, `lende
 (1, 'QuickLease Trucks', '+36123456789', 'info@quickleasetruck'),
 (2, 'Reliable Rentals', '+441234567890', 'contact@reliablerent'),
 (3, 'EasyTrailers Inc.', '+4915123456789', 'support@easytrailers');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_manager_logins`
+--
+
+CREATE TABLE `t_manager_logins` (
+  `id` tinyint(4) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password_enc` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -506,6 +635,18 @@ INSERT INTO `t_parameter_units` (`id`, `unit`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `t_trailer_adr_assignmens`
+--
+
+CREATE TABLE `t_trailer_adr_assignmens` (
+  `id` smallint(6) NOT NULL,
+  `trailer_id` smallint(6) DEFAULT NULL,
+  `adr_id` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `t_vehicles`
 --
 
@@ -566,10 +707,25 @@ INSERT INTO `t_vehicle_types` (`id`, `type`) VALUES
 --
 
 --
+-- Indexes for table `t_adr_classifications`
+--
+ALTER TABLE `t_adr_classifications`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `t_clients`
 --
 ALTER TABLE `t_clients`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `client_identifier_id` (`client_identifier_id`);
+
+--
+-- Indexes for table `t_client_identifier`
+--
+ALTER TABLE `t_client_identifier`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tax_identification_number` (`tax_identification_number`);
 
 --
 -- Indexes for table `t_drivers`
@@ -579,12 +735,27 @@ ALTER TABLE `t_drivers`
   ADD UNIQUE KEY `id_card_number` (`id_card_number`);
 
 --
+-- Indexes for table `t_driver_adr_assignments`
+--
+ALTER TABLE `t_driver_adr_assignments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `driver_id` (`driver_id`),
+  ADD KEY `adr_id` (`adr_id`);
+
+--
+-- Indexes for table `t_driver_clock_inout`
+--
+ALTER TABLE `t_driver_clock_inout`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `driver_id` (`driver_id`);
+
+--
 -- Indexes for table `t_driver_license_assignments`
 --
 ALTER TABLE `t_driver_license_assignments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `driver_id` (`driver_id`),
-  ADD KEY `license_id` (`license_id`);
+  ADD KEY `license_id` (`license_type_id`);
 
 --
 -- Indexes for table `t_driver_license_types`
@@ -626,7 +797,22 @@ ALTER TABLE `t_insurer_info`
 --
 ALTER TABLE `t_jobs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `client_id` (`client_id`);
+  ADD KEY `fk_jobs_clients_id` (`client_id`);
+
+--
+-- Indexes for table `t_jobs_midway_dropoffs`
+--
+ALTER TABLE `t_jobs_midway_dropoffs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `t_job_adr_assignments`
+--
+ALTER TABLE `t_job_adr_assignments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `job_id` (`job_id`),
+  ADD KEY `adr_id` (`adr_id`);
 
 --
 -- Indexes for table `t_job_vehicle_driver_assignments`
@@ -635,8 +821,16 @@ ALTER TABLE `t_job_vehicle_driver_assignments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `job_id` (`job_id`),
   ADD KEY `vehicle_id` (`vehicle_id`),
-  ADD KEY `trailer_id` (`trailer_id`),
   ADD KEY `driver_id` (`driver_id`);
+
+--
+-- Indexes for table `t_job_vehicle_trailer_assignments`
+--
+ALTER TABLE `t_job_vehicle_trailer_assignments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `job_id` (`job_id`),
+  ADD KEY `vehicle_id` (`vehicle_id`),
+  ADD KEY `trailer_id` (`trailer_id`);
 
 --
 -- Indexes for table `t_leasing`
@@ -651,6 +845,13 @@ ALTER TABLE `t_leasing`
 --
 ALTER TABLE `t_lender_info`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `t_manager_logins`
+--
+ALTER TABLE `t_manager_logins`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `t_parameter_assignments`
@@ -683,6 +884,14 @@ ALTER TABLE `t_parameter_units`
   ADD UNIQUE KEY `unit` (`unit`);
 
 --
+-- Indexes for table `t_trailer_adr_assignmens`
+--
+ALTER TABLE `t_trailer_adr_assignmens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicle_id` (`trailer_id`),
+  ADD KEY `adr_id` (`adr_id`);
+
+--
 -- Indexes for table `t_vehicles`
 --
 ALTER TABLE `t_vehicles`
@@ -702,16 +911,40 @@ ALTER TABLE `t_vehicle_types`
 --
 
 --
+-- AUTO_INCREMENT for table `t_adr_classifications`
+--
+ALTER TABLE `t_adr_classifications`
+  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `t_clients`
 --
 ALTER TABLE `t_clients`
   MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+-- AUTO_INCREMENT for table `t_client_identifier`
+--
+ALTER TABLE `t_client_identifier`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `t_drivers`
 --
 ALTER TABLE `t_drivers`
   MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `t_driver_adr_assignments`
+--
+ALTER TABLE `t_driver_adr_assignments`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `t_driver_clock_inout`
+--
+ALTER TABLE `t_driver_clock_inout`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `t_driver_license_assignments`
@@ -747,7 +980,7 @@ ALTER TABLE `t_insurance`
 -- AUTO_INCREMENT for table `t_insurer_info`
 --
 ALTER TABLE `t_insurer_info`
-  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `t_jobs`
@@ -756,9 +989,27 @@ ALTER TABLE `t_jobs`
   MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
+-- AUTO_INCREMENT for table `t_jobs_midway_dropoffs`
+--
+ALTER TABLE `t_jobs_midway_dropoffs`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `t_job_adr_assignments`
+--
+ALTER TABLE `t_job_adr_assignments`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `t_job_vehicle_driver_assignments`
 --
 ALTER TABLE `t_job_vehicle_driver_assignments`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `t_job_vehicle_trailer_assignments`
+--
+ALTER TABLE `t_job_vehicle_trailer_assignments`
   MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
@@ -772,6 +1023,12 @@ ALTER TABLE `t_leasing`
 --
 ALTER TABLE `t_lender_info`
   MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `t_manager_logins`
+--
+ALTER TABLE `t_manager_logins`
+  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `t_parameter_assignments`
@@ -798,6 +1055,12 @@ ALTER TABLE `t_parameter_units`
   MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `t_trailer_adr_assignmens`
+--
+ALTER TABLE `t_trailer_adr_assignmens`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `t_vehicles`
 --
 ALTER TABLE `t_vehicles`
@@ -807,18 +1070,37 @@ ALTER TABLE `t_vehicles`
 -- AUTO_INCREMENT for table `t_vehicle_types`
 --
 ALTER TABLE `t_vehicle_types`
-  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `t_clients`
+--
+ALTER TABLE `t_clients`
+  ADD CONSTRAINT `t_clients_ibfk_1` FOREIGN KEY (`client_identifier_id`) REFERENCES `t_client_identifier` (`id`);
+
+--
+-- Constraints for table `t_driver_adr_assignments`
+--
+ALTER TABLE `t_driver_adr_assignments`
+  ADD CONSTRAINT `t_driver_adr_assignments_ibfk_1` FOREIGN KEY (`driver_id`) REFERENCES `t_drivers` (`id`),
+  ADD CONSTRAINT `t_driver_adr_assignments_ibfk_2` FOREIGN KEY (`adr_id`) REFERENCES `t_adr_classifications` (`id`);
+
+--
+-- Constraints for table `t_driver_clock_inout`
+--
+ALTER TABLE `t_driver_clock_inout`
+  ADD CONSTRAINT `t_driver_clock_inout_ibfk_1` FOREIGN KEY (`driver_id`) REFERENCES `t_drivers` (`id`);
+
+--
 -- Constraints for table `t_driver_license_assignments`
 --
 ALTER TABLE `t_driver_license_assignments`
   ADD CONSTRAINT `t_driver_license_assignments_ibfk_1` FOREIGN KEY (`driver_id`) REFERENCES `t_drivers` (`id`),
-  ADD CONSTRAINT `t_driver_license_assignments_ibfk_2` FOREIGN KEY (`license_id`) REFERENCES `t_driver_license_types` (`id`);
+  ADD CONSTRAINT `t_driver_license_assignments_ibfk_2` FOREIGN KEY (`license_type_id`) REFERENCES `t_driver_license_types` (`id`);
 
 --
 -- Constraints for table `t_driver_taken_leaves`
@@ -843,7 +1125,20 @@ ALTER TABLE `t_insurance`
 -- Constraints for table `t_jobs`
 --
 ALTER TABLE `t_jobs`
-  ADD CONSTRAINT `t_jobs_ibfk_3` FOREIGN KEY (`client_id`) REFERENCES `t_clients` (`id`);
+  ADD CONSTRAINT `fk_jobs_clients_id` FOREIGN KEY (`client_id`) REFERENCES `t_clients` (`id`);
+
+--
+-- Constraints for table `t_jobs_midway_dropoffs`
+--
+ALTER TABLE `t_jobs_midway_dropoffs`
+  ADD CONSTRAINT `t_jobs_midway_dropoffs_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `t_jobs` (`id`);
+
+--
+-- Constraints for table `t_job_adr_assignments`
+--
+ALTER TABLE `t_job_adr_assignments`
+  ADD CONSTRAINT `t_job_adr_assignments_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `t_jobs` (`id`),
+  ADD CONSTRAINT `t_job_adr_assignments_ibfk_2` FOREIGN KEY (`adr_id`) REFERENCES `t_adr_classifications` (`id`);
 
 --
 -- Constraints for table `t_job_vehicle_driver_assignments`
@@ -851,8 +1146,15 @@ ALTER TABLE `t_jobs`
 ALTER TABLE `t_job_vehicle_driver_assignments`
   ADD CONSTRAINT `t_job_vehicle_driver_assignments_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `t_jobs` (`id`),
   ADD CONSTRAINT `t_job_vehicle_driver_assignments_ibfk_2` FOREIGN KEY (`vehicle_id`) REFERENCES `t_vehicles` (`id`),
-  ADD CONSTRAINT `t_job_vehicle_driver_assignments_ibfk_3` FOREIGN KEY (`trailer_id`) REFERENCES `t_vehicles` (`id`),
-  ADD CONSTRAINT `t_job_vehicle_driver_assignments_ibfk_4` FOREIGN KEY (`driver_id`) REFERENCES `t_drivers` (`id`);
+  ADD CONSTRAINT `t_job_vehicle_driver_assignments_ibfk_3` FOREIGN KEY (`driver_id`) REFERENCES `t_drivers` (`id`);
+
+--
+-- Constraints for table `t_job_vehicle_trailer_assignments`
+--
+ALTER TABLE `t_job_vehicle_trailer_assignments`
+  ADD CONSTRAINT `t_job_vehicle_trailer_assignments_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `t_jobs` (`id`),
+  ADD CONSTRAINT `t_job_vehicle_trailer_assignments_ibfk_2` FOREIGN KEY (`vehicle_id`) REFERENCES `t_vehicles` (`id`),
+  ADD CONSTRAINT `t_job_vehicle_trailer_assignments_ibfk_3` FOREIGN KEY (`trailer_id`) REFERENCES `t_vehicles` (`id`);
 
 --
 -- Constraints for table `t_leasing`
@@ -874,6 +1176,13 @@ ALTER TABLE `t_parameter_assignments`
 ALTER TABLE `t_parameter_list`
   ADD CONSTRAINT `t_parameter_list_ibfk_1` FOREIGN KEY (`param_type_id`) REFERENCES `t_parameter_types` (`id`),
   ADD CONSTRAINT `t_parameter_list_ibfk_2` FOREIGN KEY (`param_unit_id`) REFERENCES `t_parameter_units` (`id`);
+
+--
+-- Constraints for table `t_trailer_adr_assignmens`
+--
+ALTER TABLE `t_trailer_adr_assignmens`
+  ADD CONSTRAINT `t_trailer_adr_assignmens_ibfk_1` FOREIGN KEY (`trailer_id`) REFERENCES `t_vehicles` (`id`),
+  ADD CONSTRAINT `t_trailer_adr_assignmens_ibfk_2` FOREIGN KEY (`adr_id`) REFERENCES `t_adr_classifications` (`id`);
 
 --
 -- Constraints for table `t_vehicles`

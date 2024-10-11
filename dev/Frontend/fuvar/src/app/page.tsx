@@ -2,9 +2,9 @@
 import { Component, ReactNode, useState } from "react"
 import Link from "next/link";
 
-import backgroundImages from "./Helpers/backgroundImages"
-import { InputField, InputProps } from "./Components/InputField"
-import InvalidInputText from "./Components/InvalidInputText"
+import backgroundImages from "@/app/helpers/backgroundImages"
+import { InputField, InputProps } from "@/app/components/InputField"
+import InvalidInputText from "@/app/components/InvalidInputText"
 
 export default function Home() {
   let [wallpaper, setWallpaper] = useState(`${backgroundImages[Math.floor(Math.random() * (backgroundImages.length))].src}`)
@@ -53,8 +53,8 @@ function LoginForm() {
         shown={showInvalid} />
 
       <div className="flex justify-between mt-4 gap-x-4">
-        <LoginButton url={"/dashboard"} callback={() => handleButtonPress(LoginButtonTypes.USER)} innerText="Login as Courier" loginType={LoginButtonTypes.USER} />
-        <LoginButton url={"/dashboard"} callback={() => handleButtonPress(LoginButtonTypes.ADMIN)} innerText="Login as Administrator" loginType={LoginButtonTypes.ADMIN} />
+        <LoginButton url={"./routes/dashboard"} callback={() => handleButtonPress(LoginButtonTypes.USER)} innerText="Login as Courier" loginType={LoginButtonTypes.USER} />
+        <LoginButton url={"./routes/dashboard"} callback={() => handleButtonPress(LoginButtonTypes.ADMIN)} innerText="Login as Administrator" loginType={LoginButtonTypes.ADMIN} />
       </div>
     </form>
   )
@@ -78,6 +78,7 @@ function LoginButton(props: LoginButtonProps) {
     </Link>
   )
 }
+
 export interface LoginButtonProps {
   loginType: LoginButtonTypes;
   innerText: string;

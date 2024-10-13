@@ -4,7 +4,7 @@ import { ThreeHorizontalLines } from "@/app/images/svg/three-horizontal-lines"
 import { useState } from "react";
 
 export default function SideNav() {
-    let [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     function handleClick() {
         setIsOpen(!isOpen)
     }
